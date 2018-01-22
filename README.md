@@ -1,3 +1,7 @@
+# Proxy Thumbor API
+
+Proxy thumbor API to resize images by categories and alias with docker-compose for supply
+
 ## Development
 The project uses a **docker container** as development environment.
 
