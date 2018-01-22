@@ -2,6 +2,31 @@
 
 Proxy thumbor API to resize images by categories and alias with docker-compose for supply
 
+````
+proxy-thumbor-api
+ ├── src
+ │   ├── java
+ │   │    └── com.proxy.thumborapi
+ │   │               ├── config
+ │   │               ├── exception
+ │   │               ├── model
+ │   │               ├── service
+ │   │               ├── thumbor
+ │   │               ├── web
+ │   │               └── ThumborApiApplication.java
+ │   └── resources
+ │          ├── application.yml #config sizes and categories for default
+ │          ├── application-pre.yml #config sizes and categories for pre-production envoriment
+ │          ├── application-pro.yml #config sizes and categories for production envoriment
+ │          └── aplication-uat.yml #config sizes and categories for uat envoriment
+ │   
+ ├── test
+ │   
+ ├── build.gradle  # config to gradle
+ ├── docker-compose.yml # file to supply envoriment thumbor oficial engine
+ └── README.md
+ ````
+
 ## Development
 The project uses a **docker container** as development environment.
 
