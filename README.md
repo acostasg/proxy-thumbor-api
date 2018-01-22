@@ -58,11 +58,6 @@ gradle test
 
 or use Gradle projects un your IntellijIDEA:  pmp-thumbor-api \[bootRun\]
 
-#### View list of images, only AWS bucket:
-````
-http://localhost:8080/images/list
-``
-
 #### Sample and check image
 
 Legacy with prefix /api
@@ -79,3 +74,8 @@ or webp (chrome only)
 ```
 http://localhost:8080/resize/es/zoom/sample-two.jpg?webp=true
 ```
+
+#### View list of images, only AWS bucket:
+````
+http://localhost:8080/images/list
+````
