@@ -1,0 +1,7 @@
+version: "3"
+services:
+    # See: https://github.com/APSL/docker-thumbor
+    thumbor_server:
+        ports:
+          - 8000:8000
+        image: apsl/thumbor:6.3.0

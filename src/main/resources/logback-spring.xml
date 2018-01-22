@@ -1,0 +1,97 @@
+<configuration scan="true">
+    <property name="APP_NAME" value="pmp-thumbor-api"/>
+    <property name="LOG_DIRECTORY" value="/var/log"/>
+    <springProfile name="default">
+        <property name="LOG_DIRECTORY" value="/tmp"/>
+    </springProfile>
+    <property name="UNIFIED_PATTERN"
+              value="[NODE=${HOSTNAME}] [SRC=${APP_NAME}] [TRACE=%X{X-B3-TraceId:-}] [SPAN=%X{X-B3-SpanId:-}] [%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ}] [%level] [MSG=[%thread] %logger{36} - %msg %ex]%n"/>
+    <property name="GELF_PATTERN"
+              value='{
+            "version": "1.1",
+            "host": "${HOSTNAME}",
+            "_timestamp": "%date{yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSSZ}",
+            "_service": "${APP_NAME}",
+            "_trace": "%X{X-B3-TraceId:-}",
+            "_span": "%X{X-B3-SpanId:-}",
+            "_severity": "%level",
+            "_thread": "%thread",
+            "_class": "%logger{36}",
+            "short_message": "%.-128msg",
+            "full_message": "%msg %ex"
+        }'/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+
+        <encoder>
+            <pattern>${UNIFIED_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIRECTORY}/${APP_NAME}/${APP_NAME}.log</file>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOG_DIRECTORY}/${APP_NAME}/${APP_NAME}.%i.log</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>5</MaxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>20MB</MaxFileSize>
+        </triggeringPolicy>
+
+        <encoder>
+            <pattern>${UNIFIED_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="FILE"/>
+    </appender>
+
+
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIRECTORY}/${APP_NAME}/${APP_NAME}_debug.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOG_DIRECTORY}/${APP_NAME}/${APP_NAME}_debug.%i.log</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>5</MaxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>20MB</MaxFileSize>
+        </triggeringPolicy>
+
+        <encoder>
+            <pattern>${UNIFIED_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="DEBUG_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="DEBUG_FILE"/>
+    </appender>
+
+
+    <logger name="com.proxy.thumborapi" level="DEBUG">
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="DEBUG_ASYNC"/>
+    </root>
+
+</configuration>

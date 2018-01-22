@@ -1,0 +1,18 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AXXXXXXXXXXXXXXXXXXA
+      secretKey: aXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXa
+
+thumbor:
+  s3BucketName: product-images-pro
+
+static_repositories:
+  es: https://img-es.static.com/get/photo/
+  it: https://img-it.static.com/get/photo/
+  fr: https://img-fr.static.com/get/photo/
+  pr: https://img-pr.static.com/get/photo/
+
+management:
+  security:
+    enabled: true

@@ -1,0 +1,62 @@
+spring:
+  application:
+      name: proxy-thumbor-api
+
+#Amazon storage configuration
+cloud:
+  aws:
+    credentials:
+      accessKey: AXXXXXXXXXXXXXXXXXXA
+      secretKey: aXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXa
+      instanceProfile:  true
+    region:
+      static: eu-west-1
+    stack:
+      auto: false
+
+thumbor:
+  serviceUrl: http://thumbor_server:8000
+  s3BucketName: test-product-images
+
+#repository static images
+static_repositories:
+  es: https://img-es.static-test.com/get/photo/
+  it: https://img-it.static-test.com/get/photo/
+  fr: https://img-fr.static-test.com/get/photo/
+  pr: https://img-pr.static-test.com/get/photo/
+
+sizes:
+  universal_sizes: &hierarchy_sizes
+    thumb:       "150x150"
+    small:       "250x250"
+    medium:      "500x500"
+    big:         "1000x1000"
+    tn:          "70x70"
+    ab:          "300x300"
+    templ:       "540x540"
+    zoom:        "2000x2000"
+    mosaic480w:  "480x198"
+    mosaic862w:  "862x355"
+    mosaic1080w: "1080x445"
+
+sources:
+  images-es:
+    url-service: ${static_repositories.es}
+    sizes:
+      <<: *hierarchy_sizes
+  images-it:
+    url-service: ${static_repositories.it}
+    sizes:
+      <<: *hierarchy_sizes
+  images-fr:
+    url-service: ${static_repositories.fr}
+    sizes:
+      <<: *hierarchy_sizes
+  images-pr:
+    url-service: ${static_repositories.pr}
+    sizes:
+      <<: *hierarchy_sizes
+
+management:
+  security:
+    enabled: false

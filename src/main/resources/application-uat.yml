@@ -1,0 +1,5 @@
+static_repositories:
+  es: https://img-es.static-uat.com/get/photo/
+  it: https://img-it.static-uat.com/get/photo/
+  fr: https://img-fr.static-uat.com/get/photo/
+  pr: https://img-pr.static-uat.com/get/photo/
